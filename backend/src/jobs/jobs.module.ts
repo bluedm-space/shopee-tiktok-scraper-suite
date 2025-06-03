@@ -7,6 +7,10 @@ import { JobsProcessor } from './jobs.processor';
   imports: [
     BullModule.registerQueue({
       name: 'shopee',
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
     }),
   ],
   providers: [JobsService, JobsProcessor],

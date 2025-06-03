@@ -3,7 +3,7 @@ export async function uploadOrders(file: File) {
     formData.append('file', file);
   
     try {
-      const res = await fetch('http://localhost:3001/api/upload', {
+      const res = await fetch('http://192.168.1.105:3001/api/upload', {
         method: 'POST',
         body: formData,
       });
