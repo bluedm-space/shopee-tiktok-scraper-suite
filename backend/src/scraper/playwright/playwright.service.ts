@@ -97,24 +97,6 @@ export class PlaywrightService implements OnModuleDestroy {
         await this.manualLogin(context);
       }
     }
-
-    // if (!this.isLoggedIn) {
-    //   // ลองเปิดหน้า / ตรวจสอบว่า login แล้วหรือยัง
-    //   console.log('Logged in');
-    //   await this.page.goto('https://seller.shopee.co.th/portal/home');
-
-    //   if (this.page.url().includes('login')) {
-    //     console.log('🔒 ยังไม่ login → ให้ผู้ใช้ login ด้วยตนเองรอบแรก');
-    //     await this.page.waitForURL('**/portal/home', { timeout: 300000 }); // รอ login สำเร็จใน 5 นาที
-    //     console.log('✅ Login manual ผ่านแล้ว');
-    //   }
-
-    //   this.isLoggedIn = true;
-    // }
-
-    // if (!this.isLoggedIn) {
-    //   await this.login();
-    // }
   }
 
   async searchOrderId(orderId: string): Promise<string | null> {
@@ -162,7 +144,7 @@ export class PlaywrightService implements OnModuleDestroy {
       'Shopee-Project',
       `shopee-pdf-OldOrder-FetchAt-${today}`,
     );
-    const outputPath = path.join(outputFolder, `${orderId}.pdf`);
+    const outputPath = path.join(outputFolder, `Shopee-${orderId}.pdf`);
 
     // Ensure output directory
     fs.mkdirSync(outputFolder, { recursive: true });
