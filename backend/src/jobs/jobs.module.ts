@@ -2,16 +2,14 @@ import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
 import { JobsService } from './jobs.service';
 import { JobsProcessor } from './jobs.processor';
+import { ScraperModule } from '../scraper/scraper.module';
 
 @Module({
   imports: [
     BullModule.registerQueue({
       name: 'shopee',
-      redis: {
-        host: 'localhost',
-        port: 6379,
-      },
     }),
+    ScraperModule,
   ],
   providers: [JobsService, JobsProcessor],
   exports: [JobsService],

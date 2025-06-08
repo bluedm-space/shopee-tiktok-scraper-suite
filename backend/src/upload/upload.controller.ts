@@ -23,9 +23,13 @@ export class UploadController {
       throw new BadRequestException('File is required');
     }
 
+    console.log('📁 Received file:', file?.originalname);
+
     const orderIds = this.uploadService.parseFile(file);
+    console.log('📋 Order IDs to queue:', orderIds); // ✅ debug
 
     for (const orderId of orderIds) {
+      console.log('📦 Queueing:', orderId); // ✅ debug
       await this.jobsService.addJob({ orderId });
     }
 

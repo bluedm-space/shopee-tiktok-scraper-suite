@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -19,6 +14,7 @@ export class UploadService {
       .map((line) => line.trim())
       .filter((line) => line !== '');
 
+    console.log('📋 Parsed Order IDs:', lines); // ✅ debug
     return lines;
   }
 }

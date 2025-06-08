@@ -4,9 +4,11 @@ import { Queue } from 'bull';
 
 @Injectable()
 export class JobsService {
-  constructor(@InjectQueue('shopee') private readonly queue: Queue) {}
+  constructor(@InjectQueue('shopee') private readonly jobQueue: Queue) {}
 
   async addJob(data: { orderId: string }) {
-    await this.queue.add('scrape-order', data);
+    console.log('📨 Enqueue job:', data); // ✅ debug
+    const job = await this.jobQueue.add('printOrderPDF', data);
+    console.log('✅ [JobsService] Job enqueued:', job.id);
   }
 }
