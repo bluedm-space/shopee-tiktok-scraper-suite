@@ -41,6 +41,12 @@ export class PlaywrightService implements OnModuleDestroy {
 
     // 💡 รอ login manual โดยผู้ใช้ (OTP, Captcha, 2FA)
     console.log('🧍‍♂️ โปรด login ด้วยตนเอง (กด "เข้าสู่ระบบ")');
+    await this.page.waitForTimeout(2000);
+
+    // Click 2FA and push notification to mobile
+    await this.page.click('div.T3_6Lo');
+    await this.page.waitForTimeout(10000);
+
     await this.page.waitForURL('**/portal/home', { timeout: 300000 }); // รอสูงสุด 5 นาที
 
     // ✅ บันทึก cookie หลัง login
@@ -70,13 +76,15 @@ export class PlaywrightService implements OnModuleDestroy {
       console.log('Page Loaded');
 
       await this.page.goto('https://accounts.shopee.co.th/seller/login', {
-        waitUntil: 'networkidle',
+        waitUntil: 'load',
       });
       await this.page.waitForTimeout(2000);
+      console.log('Wait Complete');
 
       // 📍 ถ้ามี popup เลือกภาษา
       const langPopup = await this.page.$('.language-selection__list');
       if (langPopup) {
+        console.log('Found Button');
         await this.page.click('button:has-text("ไทย")');
         await this.page.waitForTimeout(500);
       }
@@ -96,6 +104,18 @@ export class PlaywrightService implements OnModuleDestroy {
         console.log('🔐 ต้อง login ด้วยตนเอง (ครั้งแรก)');
         await this.manualLogin(context);
       }
+      await this.page.waitForTimeout(5000);
+
+      /**
+       * * Prepare login flow by 2FA
+       * This is Component click <div aria-hidden="true" class="T3_6Lo">ยืนยันตัวตนผ่านลิงก์</div>
+       * * After login success it have popup then need to close
+       * This is component click <i data-v-c3cf29f8="" data-v-d2d4c1c8="" class="eds-icon eds-modal__close">
+       * todo 'Need to create click button is success'
+       */
+
+      // await this.page.click('i.eds-modal__close');
+      await this.page.reload({ waitUntil: 'load' });
     }
   }
 

@@ -16,7 +16,7 @@ export default function UploadAndStatusPage() {
 
   useEffect(() => {
     const load = async () => {
-      const res = await fetch('/api/batches');
+      const res = await fetch('http://192.168.1.105:3001/api/batches');
       const data = await res.json();
       setBatches(data.sort((a: BatchMeta, b: BatchMeta) =>
         b.createdAt.localeCompare(a.createdAt)

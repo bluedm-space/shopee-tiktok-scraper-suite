@@ -14,7 +14,10 @@ export class JobsService {
 
   async addJob(data: PrintJobData) {
     console.log('📨 Enqueue job:', data); // ✅ debug
-    const job = await this.jobQueue.add('printOrderPDF', data);
+    const job = await this.jobQueue.add('printOrderPDF', data, {
+      removeOnComplete: true, // Auto Complete Job Clear
+      removeOnFail: true, // Auto Fail Job Clear
+    });
     console.log('✅ [JobsService] Job enqueued:', job.id);
   }
 }
